@@ -7824,15 +7824,15 @@ const firebaseConfig = {
 
             ];
 
-            const currentHost = window.location.hostname;
+            const currentHost = (window.location.hostname || '').toLowerCase();
 
             const isLocalhost = currentHost === "localhost" || currentHost === "";
 
-            
-
-            const isAllowed = allowedHosts.some(host => currentHost.endsWith(host)) || isLocalhost;
-
-            if (!isAllowed) {
+            const isAllowed = allowedHosts.some(host => {
+ const normalizedHost = (host || '').toLowerCase();
+ return normalizedHost && currentHost.endsWith(normalizedHost);
+ }) || isLocalhost;
+if (!isAllowed) {
 
                 console.error("Game running on unauthorized domain:", currentHost);
 
